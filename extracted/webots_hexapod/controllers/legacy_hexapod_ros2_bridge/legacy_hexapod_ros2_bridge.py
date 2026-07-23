@@ -38,13 +38,14 @@ LEG_PREFIXES = ("lf", "lm", "lr", "rf", "rm", "rr")
 LEFT_LEGS = {"lf", "lm", "lr"}
 TRIPOD_A = {"lf", "rm", "lr"}
 
-COXA_BASE_SWING = 0.28
+COXA_BASE_SWING = 0.32
 FEMUR_STAND = 0.40
 TIBIA_STAND = 0.32
-FEMUR_LIFT_DELTA = 0.25
-TIBIA_LIFT_DELTA = 0.68
-DEFAULT_STEP_PERIOD = 1.25
+FEMUR_LIFT_DELTA = 0.22
+TIBIA_LIFT_DELTA = 0.40
+DEFAULT_STEP_PERIOD = 1.60
 STANCE_FRACTION = 0.62
+COMMAND_FILTER_SECONDS = 0.25
 
 JOINT_SUFFIXES = ("coxa_joint", "femur_joint", "tibia_joint")
 
@@ -77,6 +78,9 @@ class LegacyHexapodRos2Bridge:
         self.joint_names = []
         self.current_linear = 0.0
         self.current_angular = 0.0
+        self.filtered_linear_gain = 0.0
+        self.filtered_angular_gain = 0.0
+        self.gait_cycle = 0.0
         self.last_cmd_time = 0.0
         self.last_odom_sample = None
         self.sensor_mode = os.environ.get("HEXAPOD_SENSOR_MODE", "lite").lower()
@@ -179,9 +183,10 @@ class LegacyHexapodRos2Bridge:
             lift = math.sin(math.pi * progress)
 
         activity = abs(stride_gain)
+        lift_gain = (0.55 + 0.45 * activity) if activity > 0.02 else 0.0
         coxa = coxa_sign * COXA_BASE_SWING * stride_gain * foot_sweep
-        femur = side_sign * (FEMUR_STAND + FEMUR_LIFT_DELTA * activity * lift)
-        tibia = -side_sign * (TIBIA_STAND + TIBIA_LIFT_DELTA * activity * lift)
+        femur = side_sign * (FEMUR_STAND + FEMUR_LIFT_DELTA * lift_gain * lift)
+        tibia = -side_sign * (TIBIA_STAND + TIBIA_LIFT_DELTA * lift_gain * lift)
         return coxa, femur, tibia
 
     def _set_leg_positions(self, leg_prefix, coxa, femur, tibia):
@@ -304,20 +309,28 @@ class LegacyHexapodRos2Bridge:
         now = self._sim_time()
         cmd_age = now - self.last_cmd_time
         active = cmd_age < CMD_TIMEOUT_SECONDS
-        linear_gain = clamp(self.current_linear / 0.12, -1.0, 1.0) if active else 0.0
-        angular_gain = clamp(self.current_angular / 0.8, -1.0, 1.0) if active else 0.0
+        target_linear = clamp(self.current_linear / 0.12, -1.0, 1.0) if active else 0.0
+        target_angular = clamp(self.current_angular / 0.8, -1.0, 1.0) if active else 0.0
+        dt = self.time_step / 1000.0
+        filter_alpha = 1.0 - math.exp(-dt / COMMAND_FILTER_SECONDS)
+        self.filtered_linear_gain += filter_alpha * (target_linear - self.filtered_linear_gain)
+        self.filtered_angular_gain += filter_alpha * (target_angular - self.filtered_angular_gain)
+        linear_gain = self.filtered_linear_gain
+        angular_gain = self.filtered_angular_gain
 
-        if abs(linear_gain) < 0.05 and abs(angular_gain) < 0.05:
+        if abs(linear_gain) < 0.02 and abs(angular_gain) < 0.02:
+            self.filtered_linear_gain = 0.0
+            self.filtered_angular_gain = 0.0
             for leg_prefix in LEG_PREFIXES:
                 self._set_leg_positions(leg_prefix, *self._stance_targets(leg_prefix))
             return
 
         activity = max(abs(linear_gain), abs(angular_gain))
-        step_period = DEFAULT_STEP_PERIOD - 0.6 * activity
-        cycle = ((step_count * self.time_step / 1000.0) / step_period) % 1.0
+        step_period = DEFAULT_STEP_PERIOD - 0.30 * activity
+        self.gait_cycle = (self.gait_cycle + dt / step_period) % 1.0
 
         for leg_prefix in LEG_PREFIXES:
-            targets = self._leg_targets(leg_prefix, cycle, linear_gain, angular_gain)
+            targets = self._leg_targets(leg_prefix, self.gait_cycle, linear_gain, angular_gain)
             self._set_leg_positions(leg_prefix, *targets)
 
     def run(self):
