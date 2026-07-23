@@ -1,0 +1,27 @@
+#VRML_SIM R2025a utf8
+# license: Apache License 2.0
+
+PROTO TrackLabel [
+  field SFVec3f  translation 0 0 0.012
+  field SFVec2f  size        0.60 0.12
+  field MFString textureUrl  []
+]
+{
+  Pose {
+    translation IS translation
+    children [
+      Shape {
+        appearance PBRAppearance {
+          baseColorMap ImageTexture {
+            url IS textureUrl
+          }
+          roughness 1
+          metalness 0
+        }
+        geometry Plane {
+          size IS size
+        }
+      }
+    ]
+  }
+}

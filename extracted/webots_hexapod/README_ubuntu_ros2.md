@@ -109,6 +109,27 @@ cd extracted/webots_hexapod
 Only one `/cmd_vel` publisher should run at a time. Stop any manual
 `ros2 topic pub` command before starting a path demo.
 
+## Labeled obstacle course
+
+`worlds/legacy_hexapod_ros2_bridge_test.wbt` now contains a 4 m x 4 m
+modular test track. Each section has a numbered floor label and every obstacle
+also has a descriptive name in the Webots scene tree:
+
+1. `RAMP 20 DEG`: 20-degree ascent, platform, and descent.
+2. `30 / 60 / 90 mm STEPS`: progressive stair-height test.
+3. `UNEVEN PLATES`: alternating tilted footholds.
+4. `SPEED BUMPS`: repeated transverse rounded obstacles.
+5. `SLALOM`: posts for turning and combined-trajectory tests.
+6. `WALL OBSTACLE CORRIDOR`: narrow passage with wall protrusions.
+7. `LOW BEAM`: overhead-clearance obstacle.
+8. `ROCK FIELD`: irregular blocks with varied size and orientation.
+9. `BALANCE BEAM`: narrow raised route with edge markers.
+
+The robot starts in the marked `START` zone away from the arena walls. Track
+geometry is defined in `protos/HexapodTestTrack.proto`; label rendering is
+defined in `protos/TrackLabel.proto`, so the course can be reused in another
+world with one `HexapodTestTrack {}` node.
+
 ## Notes
 
 - This is a first-pass bridge intended to get Webots sensors and gait control into ROS 2 quickly.

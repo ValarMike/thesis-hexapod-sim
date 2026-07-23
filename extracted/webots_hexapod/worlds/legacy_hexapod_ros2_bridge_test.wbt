@@ -4,6 +4,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "../protos/LegacyHexapod.proto"
+EXTERNPROTO "../protos/HexapodTestTrack.proto"
 
 WorldInfo {
   title "Legacy Hexapod ROS 2 Bridge Test"
@@ -11,8 +12,8 @@ WorldInfo {
 }
 
 Viewpoint {
-  orientation -0.363518 0.357023 0.860796 1.28545
-  position 0.587774 -0.651688 0.468305
+  orientation -0.476 0.420 0.773 1.18
+  position 3.45 -3.65 3.15
 }
 
 TexturedBackground {
@@ -22,12 +23,15 @@ TexturedBackgroundLight {
 }
 
 RectangleArena {
-  floorSize 2 2
-  wallHeight 0.1
+  floorSize 4 4
+  wallHeight 0.18
+}
+
+HexapodTestTrack {
 }
 
 LegacyHexapod {
-  translation 0 0 0.16
+  translation -1.72 -1.15 0.16
   rotation 0 0 1 0
   controller "<extern>"
   name "legacy_hexapod_ros2"
