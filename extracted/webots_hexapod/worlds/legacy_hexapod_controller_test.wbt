@@ -1,0 +1,35 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "../protos/LegacyHexapod.proto"
+
+WorldInfo {
+  title "Legacy Hexapod Controller Test"
+  basicTimeStep 16
+}
+
+Viewpoint {
+  orientation -0.363518 0.357023 0.860796 1.28545
+  position 0.587774 -0.651688 0.468305
+}
+
+TexturedBackground {
+}
+
+TexturedBackgroundLight {
+}
+
+RectangleArena {
+  floorSize 2 2
+  wallHeight 0.1
+}
+
+LegacyHexapod {
+  translation 0 0 0.16
+  rotation 0 0 1 0
+  controller "legacy_hexapod_controller"
+  name "legacy_hexapod"
+  selfCollision FALSE
+}

@@ -1,0 +1,1004 @@
+#VRML_SIM R2025a utf8
+# license: Apache License 2.0
+# license url: http://www.apache.org/licenses/LICENSE-2.0
+# This is a proto file for Webots for the LegacyHexapod
+# Extracted from: C:\Users\QwQ\Desktop\work\Thesis\sim_export\legacy_hexapod_description\urdf\legacy_hexapod_simplified.urdf
+
+PROTO LegacyHexapod [
+  field  SFVec3f     translation     0 0 0
+  field  SFRotation  rotation        0 0 1 0
+  field  SFString    name            "LegacyHexapod"  # Is `Robot.name`.
+  field  SFString    controller      "legacy_hexapod_controller" # Is `Robot.controller`.
+  field  MFString    controllerArgs  []               # Is `Robot.controllerArgs`.
+  field  SFString    customData      ""               # Is `Robot.customData`.
+  field  SFBool      supervisor      FALSE            # Is `Robot.supervisor`.
+  field  SFBool      synchronization TRUE             # Is `Robot.synchronization`.
+  field  SFBool      selfCollision   FALSE            # Is `Robot.selfCollision`.
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    controller IS controller
+    controllerArgs IS controllerArgs
+    customData IS customData
+    supervisor IS supervisor
+    synchronization IS synchronization
+    selfCollision IS selfCollision
+    children [
+      Shape {
+        appearance DEF silver PBRAppearance {
+          baseColor 0.500000 0.500000 0.500000
+          roughness 1.000000
+          metalness 0
+        }
+        geometry Box {
+           size 0.136700 0.078000 0.012000
+        }
+      }
+      Solid {
+        translation 0.000000 0.000000 0.045000
+        children [
+          Shape {
+            appearance DEF sensor_blue PBRAppearance {
+              baseColor 0.500000 0.500000 0.500000
+              roughness 1.000000
+              metalness 0
+            }
+            geometry Cylinder {
+              radius 0.025
+              height 0.02
+            }
+          }
+        ]
+        name "lidar_link"
+        boundingObject Cylinder {
+          radius 0.025
+          height 0.02
+        }
+        physics Physics {
+          density -1
+          mass 0.080000
+          centerOfMass [ 0.000000 0.000000 0.000000 ]
+          inertiaMatrix [
+            2.000000e-05 2.000000e-05 2.000000e-05
+            0.000000e+00 0.000000e+00 0.000000e+00
+          ]
+        }
+      }
+      Solid {
+        translation 0.018000 0.025000 0.035000
+        children [
+          Shape {
+            appearance DEF black PBRAppearance {
+              baseColor 0.500000 0.500000 0.500000
+              roughness 1.000000
+              metalness 0
+            }
+            geometry Box {
+               size 0.020000 0.020000 0.015000
+            }
+          }
+        ]
+        name "left_camera_link"
+        boundingObject Box {
+           size 0.020000 0.020000 0.015000
+        }
+        physics Physics {
+          density -1
+          mass 0.030000
+          centerOfMass [ 0.000000 0.000000 0.000000 ]
+          inertiaMatrix [
+            1.000000e-05 1.000000e-05 1.000000e-05
+            0.000000e+00 0.000000e+00 0.000000e+00
+          ]
+        }
+      }
+      Solid {
+        translation 0.018000 -0.025000 0.035000
+        children [
+          Shape {
+            appearance USE black
+            geometry Box {
+               size 0.020000 0.020000 0.015000
+            }
+          }
+        ]
+        name "right_camera_link"
+        boundingObject Box {
+           size 0.020000 0.020000 0.015000
+        }
+        physics Physics {
+          density -1
+          mass 0.030000
+          centerOfMass [ 0.000000 0.000000 0.000000 ]
+          inertiaMatrix [
+            1.000000e-05 1.000000e-05 1.000000e-05
+            0.000000e+00 0.000000e+00 0.000000e+00
+          ]
+        }
+      }
+      Solid {
+        translation 0.000000 0.000000 0.030000
+        children [
+          Shape {
+            appearance USE sensor_blue
+            geometry Box {
+               size 0.015000 0.015000 0.008000
+            }
+          }
+        ]
+        name "imu_link"
+        boundingObject Box {
+           size 0.015000 0.015000 0.008000
+        }
+        physics Physics {
+          density -1
+          mass 0.020000
+          centerOfMass [ 0.000000 0.000000 0.000000 ]
+          inertiaMatrix [
+            5.000000e-06 5.000000e-06 5.000000e-06
+            0.000000e+00 0.000000e+00 0.000000e+00
+          ]
+        }
+      }
+      Lidar {
+        translation 0.000000 0.000000 0.055000
+        name "lidar"
+        horizontalResolution 180
+        fieldOfView 6.283185307
+        verticalFieldOfView 0.261799
+        numberOfLayers 4
+        near 0.050000
+        minRange 0.050000
+        maxRange 6.000000
+        noise 0.002000
+        defaultFrequency 5
+      }
+      RangeFinder {
+        translation 0.030000 0.000000 0.038000
+        name "depth_camera"
+        fieldOfView 1.047198
+        width 64
+        height 48
+        near 0.050000
+        minRange 0.050000
+        maxRange 5.000000
+        noise 0.001000
+      }
+      Accelerometer {
+        translation 0.000000 0.000000 0.030000
+        name "accelerometer"
+      }
+      Gyro {
+        translation 0.000000 0.000000 0.030000
+        name "gyro"
+      }
+      InertialUnit {
+        translation 0.000000 0.000000 0.030000
+        name "imu"
+      }
+      GPS {
+        name "gps"
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0.000000 0.000000 1.000000
+          anchor 0.048000 0.042000 0.000000
+        }
+        device [
+          RotationalMotor {
+            name "lf_coxa_joint"
+            maxVelocity 2.0
+            minPosition -1.2
+            maxPosition 1.2
+            maxTorque 8.0
+          }
+          PositionSensor {
+            name "lf_coxa_joint_sensor"
+          }
+        ]
+        endPoint Solid {
+          translation 0.048000 0.042000 0.000000
+          children [
+            Shape {
+              appearance USE black
+              geometry Box {
+                 size 0.035000 0.018000 0.018000
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                anchor 0.000000 0.035000 0.000000
+              }
+              device [
+                RotationalMotor {
+                  name "lf_femur_joint"
+                  maxVelocity 2.0
+                  minPosition -1.4
+                  maxPosition 1.2
+                  maxTorque 8.0
+                }
+                PositionSensor {
+                  name "lf_femur_joint_sensor"
+                }
+              ]
+              endPoint Solid {
+                translation 0.000000 0.035000 0.000000
+                children [
+                  Pose {
+                    translation 0.000000 0.000000 -0.032500
+                    children [
+                      Shape {
+                        appearance USE silver
+                        geometry Box {
+                           size 0.018000 0.018000 0.065000
+                        }
+                      }
+                    ]
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      anchor 0.000000 0.000000 -0.065000
+                    }
+                    device [
+                      RotationalMotor {
+                        name "lf_tibia_joint"
+                        maxVelocity 2.0
+                        minPosition -1.6
+            maxPosition 1.6
+                        maxTorque 8.0
+                      }
+                      PositionSensor {
+                        name "lf_tibia_joint_sensor"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation 0.000000 0.000000 -0.065000
+                      children [
+                        Pose {
+                          translation 0.000000 0.000000 -0.038500
+                          children [
+                            Shape {
+                              appearance USE silver
+                              geometry Box {
+                                 size 0.016000 0.016000 0.077000
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                      name "lf_tibia_link"
+                      boundingObject Box {
+                         size 0.016000 0.016000 0.077000
+                      }
+                      physics Physics {
+                        density -1
+                        mass 0.090000
+                        centerOfMass [ 0.000000 0.000000 -0.038500 ]
+                        inertiaMatrix [
+                          3.000000e-05 3.000000e-05 2.000000e-05
+                          0.000000e+00 0.000000e+00 0.000000e+00
+                        ]
+                      }
+                    }
+                  }
+                ]
+                name "lf_femur_link"
+                boundingObject Box {
+                   size 0.018000 0.018000 0.065000
+                }
+                physics Physics {
+                  density -1
+                  mass 0.100000
+                  centerOfMass [ 0.000000 0.000000 -0.032500 ]
+                  inertiaMatrix [
+                    4.000000e-05 4.000000e-05 2.000000e-05
+                    0.000000e+00 0.000000e+00 0.000000e+00
+                  ]
+                }
+              }
+            }
+          ]
+          name "lf_coxa_link"
+          boundingObject Box {
+             size 0.035000 0.018000 0.018000
+          }
+          physics Physics {
+            density -1
+            mass 0.120000
+            centerOfMass [ 0.000000 0.000000 0.000000 ]
+            inertiaMatrix [
+              3.000000e-05 3.000000e-05 3.000000e-05
+              0.000000e+00 0.000000e+00 0.000000e+00
+            ]
+          }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0.000000 0.000000 1.000000
+          anchor 0.000000 0.042000 0.000000
+        }
+        device [
+          RotationalMotor {
+            name "lm_coxa_joint"
+            maxVelocity 2.0
+            minPosition -1.2
+            maxPosition 1.2
+            maxTorque 8.0
+          }
+          PositionSensor {
+            name "lm_coxa_joint_sensor"
+          }
+        ]
+        endPoint Solid {
+          translation 0.000000 0.042000 0.000000
+          children [
+            Shape {
+              appearance USE black
+              geometry Box {
+                 size 0.035000 0.018000 0.018000
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                anchor 0.000000 0.035000 0.000000
+              }
+              device [
+                RotationalMotor {
+                  name "lm_femur_joint"
+                  maxVelocity 2.0
+                  minPosition -1.4
+                  maxPosition 1.2
+                  maxTorque 8.0
+                }
+                PositionSensor {
+                  name "lm_femur_joint_sensor"
+                }
+              ]
+              endPoint Solid {
+                translation 0.000000 0.035000 0.000000
+                children [
+                  Pose {
+                    translation 0.000000 0.000000 -0.032500
+                    children [
+                      Shape {
+                        appearance USE silver
+                        geometry Box {
+                           size 0.018000 0.018000 0.065000
+                        }
+                      }
+                    ]
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      anchor 0.000000 0.000000 -0.065000
+                    }
+                    device [
+                      RotationalMotor {
+                        name "lm_tibia_joint"
+                        maxVelocity 2.0
+                        minPosition -1.6
+                  maxPosition 1.6
+                        maxTorque 8.0
+                      }
+                      PositionSensor {
+                        name "lm_tibia_joint_sensor"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation 0.000000 0.000000 -0.065000
+                      children [
+                        Pose {
+                          translation 0.000000 0.000000 -0.038500
+                          children [
+                            Shape {
+                              appearance USE silver
+                              geometry Box {
+                                 size 0.016000 0.016000 0.077000
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                      name "lm_tibia_link"
+                      boundingObject Box {
+                         size 0.016000 0.016000 0.077000
+                      }
+                      physics Physics {
+                        density -1
+                        mass 0.090000
+                        centerOfMass [ 0.000000 0.000000 -0.038500 ]
+                        inertiaMatrix [
+                          3.000000e-05 3.000000e-05 2.000000e-05
+                          0.000000e+00 0.000000e+00 0.000000e+00
+                        ]
+                      }
+                    }
+                  }
+                ]
+                name "lm_femur_link"
+                boundingObject Box {
+                   size 0.018000 0.018000 0.065000
+                }
+                physics Physics {
+                  density -1
+                  mass 0.100000
+                  centerOfMass [ 0.000000 0.000000 -0.032500 ]
+                  inertiaMatrix [
+                    4.000000e-05 4.000000e-05 2.000000e-05
+                    0.000000e+00 0.000000e+00 0.000000e+00
+                  ]
+                }
+              }
+            }
+          ]
+          name "lm_coxa_link"
+          boundingObject Box {
+             size 0.035000 0.018000 0.018000
+          }
+          physics Physics {
+            density -1
+            mass 0.120000
+            centerOfMass [ 0.000000 0.000000 0.000000 ]
+            inertiaMatrix [
+              3.000000e-05 3.000000e-05 3.000000e-05
+              0.000000e+00 0.000000e+00 0.000000e+00
+            ]
+          }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0.000000 0.000000 1.000000
+          anchor -0.048000 0.042000 0.000000
+        }
+        device [
+          RotationalMotor {
+            name "lr_coxa_joint"
+            maxVelocity 2.0
+            minPosition -1.2
+            maxPosition 1.2
+            maxTorque 8.0
+          }
+          PositionSensor {
+            name "lr_coxa_joint_sensor"
+          }
+        ]
+        endPoint Solid {
+          translation -0.048000 0.042000 0.000000
+          children [
+            Shape {
+              appearance USE black
+              geometry Box {
+                 size 0.035000 0.018000 0.018000
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                anchor 0.000000 0.035000 0.000000
+              }
+              device [
+                RotationalMotor {
+                  name "lr_femur_joint"
+                  maxVelocity 2.0
+                  minPosition -1.4
+                  maxPosition 1.2
+                  maxTorque 8.0
+                }
+                PositionSensor {
+                  name "lr_femur_joint_sensor"
+                }
+              ]
+              endPoint Solid {
+                translation 0.000000 0.035000 0.000000
+                children [
+                  Pose {
+                    translation 0.000000 0.000000 -0.032500
+                    children [
+                      Shape {
+                        appearance USE silver
+                        geometry Box {
+                           size 0.018000 0.018000 0.065000
+                        }
+                      }
+                    ]
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      anchor 0.000000 0.000000 -0.065000
+                    }
+                    device [
+                      RotationalMotor {
+                        name "lr_tibia_joint"
+                        maxVelocity 2.0
+                        minPosition -1.6
+                        maxPosition 1.6
+                        maxTorque 8.0
+                      }
+                      PositionSensor {
+                        name "lr_tibia_joint_sensor"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation 0.000000 0.000000 -0.065000
+                      children [
+                        Pose {
+                          translation 0.000000 0.000000 -0.038500
+                          children [
+                            Shape {
+                              appearance USE silver
+                              geometry Box {
+                                 size 0.016000 0.016000 0.077000
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                      name "lr_tibia_link"
+                      boundingObject Box {
+                         size 0.016000 0.016000 0.077000
+                      }
+                      physics Physics {
+                        density -1
+                        mass 0.090000
+                        centerOfMass [ 0.000000 0.000000 -0.038500 ]
+                        inertiaMatrix [
+                          3.000000e-05 3.000000e-05 2.000000e-05
+                          0.000000e+00 0.000000e+00 0.000000e+00
+                        ]
+                      }
+                    }
+                  }
+                ]
+                name "lr_femur_link"
+                boundingObject Box {
+                   size 0.018000 0.018000 0.065000
+                }
+                physics Physics {
+                  density -1
+                  mass 0.100000
+                  centerOfMass [ 0.000000 0.000000 -0.032500 ]
+                  inertiaMatrix [
+                    4.000000e-05 4.000000e-05 2.000000e-05
+                    0.000000e+00 0.000000e+00 0.000000e+00
+                  ]
+                }
+              }
+            }
+          ]
+          name "lr_coxa_link"
+          boundingObject Box {
+             size 0.035000 0.018000 0.018000
+          }
+          physics Physics {
+            density -1
+            mass 0.120000
+            centerOfMass [ 0.000000 0.000000 0.000000 ]
+            inertiaMatrix [
+              3.000000e-05 3.000000e-05 3.000000e-05
+              0.000000e+00 0.000000e+00 0.000000e+00
+            ]
+          }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0.000000 0.000000 1.000000
+          anchor 0.048000 -0.042000 0.000000
+        }
+        device [
+          RotationalMotor {
+            name "rf_coxa_joint"
+            maxVelocity 2.0
+            minPosition -1.2
+            maxPosition 1.2
+            maxTorque 8.0
+          }
+          PositionSensor {
+            name "rf_coxa_joint_sensor"
+          }
+        ]
+        endPoint Solid {
+          translation 0.048000 -0.042000 0.000000
+          children [
+            Shape {
+              appearance USE black
+              geometry Box {
+                 size 0.035000 0.018000 0.018000
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                anchor 0.000000 -0.035000 0.000000
+              }
+              device [
+                RotationalMotor {
+                  name "rf_femur_joint"
+                  maxVelocity 2.0
+                  minPosition -1.4
+                  maxPosition 1.2
+                  maxTorque 8.0
+                }
+                PositionSensor {
+                  name "rf_femur_joint_sensor"
+                }
+              ]
+              endPoint Solid {
+                translation 0.000000 -0.035000 0.000000
+                children [
+                  Pose {
+                    translation 0.000000 0.000000 -0.032500
+                    children [
+                      Shape {
+                        appearance USE silver
+                        geometry Box {
+                           size 0.018000 0.018000 0.065000
+                        }
+                      }
+                    ]
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      anchor 0.000000 0.000000 -0.065000
+                    }
+                    device [
+                      RotationalMotor {
+                        name "rf_tibia_joint"
+                        maxVelocity 2.0
+                        minPosition -1.6
+                  maxPosition 1.6
+                        maxTorque 8.0
+                      }
+                      PositionSensor {
+                        name "rf_tibia_joint_sensor"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation 0.000000 0.000000 -0.065000
+                      children [
+                        Pose {
+                          translation 0.000000 0.000000 -0.038500
+                          children [
+                            Shape {
+                              appearance USE silver
+                              geometry Box {
+                                 size 0.016000 0.016000 0.077000
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                      name "rf_tibia_link"
+                      boundingObject Box {
+                         size 0.016000 0.016000 0.077000
+                      }
+                      physics Physics {
+                        density -1
+                        mass 0.090000
+                        centerOfMass [ 0.000000 0.000000 -0.038500 ]
+                        inertiaMatrix [
+                          3.000000e-05 3.000000e-05 2.000000e-05
+                          0.000000e+00 0.000000e+00 0.000000e+00
+                        ]
+                      }
+                    }
+                  }
+                ]
+                name "rf_femur_link"
+                boundingObject Box {
+                   size 0.018000 0.018000 0.065000
+                }
+                physics Physics {
+                  density -1
+                  mass 0.100000
+                  centerOfMass [ 0.000000 0.000000 -0.032500 ]
+                  inertiaMatrix [
+                    4.000000e-05 4.000000e-05 2.000000e-05
+                    0.000000e+00 0.000000e+00 0.000000e+00
+                  ]
+                }
+              }
+            }
+          ]
+          name "rf_coxa_link"
+          boundingObject Box {
+             size 0.035000 0.018000 0.018000
+          }
+          physics Physics {
+            density -1
+            mass 0.120000
+            centerOfMass [ 0.000000 0.000000 0.000000 ]
+            inertiaMatrix [
+              3.000000e-05 3.000000e-05 3.000000e-05
+              0.000000e+00 0.000000e+00 0.000000e+00
+            ]
+          }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0.000000 0.000000 1.000000
+          anchor 0.000000 -0.042000 0.000000
+        }
+        device [
+          RotationalMotor {
+            name "rm_coxa_joint"
+            maxVelocity 2.0
+            minPosition -1.2
+            maxPosition 1.2
+            maxTorque 8.0
+          }
+          PositionSensor {
+            name "rm_coxa_joint_sensor"
+          }
+        ]
+        endPoint Solid {
+          translation 0.000000 -0.042000 0.000000
+          children [
+            Shape {
+              appearance USE black
+              geometry Box {
+                 size 0.035000 0.018000 0.018000
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                anchor 0.000000 -0.035000 0.000000
+              }
+              device [
+                RotationalMotor {
+                  name "rm_femur_joint"
+                  maxVelocity 2.0
+                  minPosition -1.4
+                  maxPosition 1.2
+                  maxTorque 8.0
+                }
+                PositionSensor {
+                  name "rm_femur_joint_sensor"
+                }
+              ]
+              endPoint Solid {
+                translation 0.000000 -0.035000 0.000000
+                children [
+                  Pose {
+                    translation 0.000000 0.000000 -0.032500
+                    children [
+                      Shape {
+                        appearance USE silver
+                        geometry Box {
+                           size 0.018000 0.018000 0.065000
+                        }
+                      }
+                    ]
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      anchor 0.000000 0.000000 -0.065000
+                    }
+                    device [
+                      RotationalMotor {
+                        name "rm_tibia_joint"
+                        maxVelocity 2.0
+                        minPosition -1.6
+                        maxPosition 1.6
+                        maxTorque 8.0
+                      }
+                      PositionSensor {
+                        name "rm_tibia_joint_sensor"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation 0.000000 0.000000 -0.065000
+                      children [
+                        Pose {
+                          translation 0.000000 0.000000 -0.038500
+                          children [
+                            Shape {
+                              appearance USE silver
+                              geometry Box {
+                                 size 0.016000 0.016000 0.077000
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                      name "rm_tibia_link"
+                      boundingObject Box {
+                         size 0.016000 0.016000 0.077000
+                      }
+                      physics Physics {
+                        density -1
+                        mass 0.090000
+                        centerOfMass [ 0.000000 0.000000 -0.038500 ]
+                        inertiaMatrix [
+                          3.000000e-05 3.000000e-05 2.000000e-05
+                          0.000000e+00 0.000000e+00 0.000000e+00
+                        ]
+                      }
+                    }
+                  }
+                ]
+                name "rm_femur_link"
+                boundingObject Box {
+                   size 0.018000 0.018000 0.065000
+                }
+                physics Physics {
+                  density -1
+                  mass 0.100000
+                  centerOfMass [ 0.000000 0.000000 -0.032500 ]
+                  inertiaMatrix [
+                    4.000000e-05 4.000000e-05 2.000000e-05
+                    0.000000e+00 0.000000e+00 0.000000e+00
+                  ]
+                }
+              }
+            }
+          ]
+          name "rm_coxa_link"
+          boundingObject Box {
+             size 0.035000 0.018000 0.018000
+          }
+          physics Physics {
+            density -1
+            mass 0.120000
+            centerOfMass [ 0.000000 0.000000 0.000000 ]
+            inertiaMatrix [
+              3.000000e-05 3.000000e-05 3.000000e-05
+              0.000000e+00 0.000000e+00 0.000000e+00
+            ]
+          }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0.000000 0.000000 1.000000
+          anchor -0.048000 -0.042000 0.000000
+        }
+        device [
+          RotationalMotor {
+            name "rr_coxa_joint"
+            maxVelocity 2.0
+            minPosition -1.2
+            maxPosition 1.2
+            maxTorque 8.0
+          }
+          PositionSensor {
+            name "rr_coxa_joint_sensor"
+          }
+        ]
+        endPoint Solid {
+          translation -0.048000 -0.042000 0.000000
+          children [
+            Shape {
+              appearance USE black
+              geometry Box {
+                 size 0.035000 0.018000 0.018000
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                anchor 0.000000 -0.035000 0.000000
+              }
+              device [
+                RotationalMotor {
+                  name "rr_femur_joint"
+                  maxVelocity 2.0
+                  minPosition -1.4
+                  maxPosition 1.2
+                  maxTorque 8.0
+                }
+                PositionSensor {
+                  name "rr_femur_joint_sensor"
+                }
+              ]
+              endPoint Solid {
+                translation 0.000000 -0.035000 0.000000
+                children [
+                  Pose {
+                    translation 0.000000 0.000000 -0.032500
+                    children [
+                      Shape {
+                        appearance USE silver
+                        geometry Box {
+                           size 0.018000 0.018000 0.065000
+                        }
+                      }
+                    ]
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      anchor 0.000000 0.000000 -0.065000
+                    }
+                    device [
+                      RotationalMotor {
+                        name "rr_tibia_joint"
+                        maxVelocity 2.0
+                        minPosition -1.6
+                        maxPosition 1.6
+                        maxTorque 8.0
+                      }
+                      PositionSensor {
+                        name "rr_tibia_joint_sensor"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation 0.000000 0.000000 -0.065000
+                      children [
+                        Pose {
+                          translation 0.000000 0.000000 -0.038500
+                          children [
+                            Shape {
+                              appearance USE silver
+                              geometry Box {
+                                 size 0.016000 0.016000 0.077000
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                      name "rr_tibia_link"
+                      boundingObject Box {
+                         size 0.016000 0.016000 0.077000
+                      }
+                      physics Physics {
+                        density -1
+                        mass 0.090000
+                        centerOfMass [ 0.000000 0.000000 -0.038500 ]
+                        inertiaMatrix [
+                          3.000000e-05 3.000000e-05 2.000000e-05
+                          0.000000e+00 0.000000e+00 0.000000e+00
+                        ]
+                      }
+                    }
+                  }
+                ]
+                name "rr_femur_link"
+                boundingObject Box {
+                   size 0.018000 0.018000 0.065000
+                }
+                physics Physics {
+                  density -1
+                  mass 0.100000
+                  centerOfMass [ 0.000000 0.000000 -0.032500 ]
+                  inertiaMatrix [
+                    4.000000e-05 4.000000e-05 2.000000e-05
+                    0.000000e+00 0.000000e+00 0.000000e+00
+                  ]
+                }
+              }
+            }
+          ]
+          name "rr_coxa_link"
+          boundingObject Box {
+             size 0.035000 0.018000 0.018000
+          }
+          physics Physics {
+            density -1
+            mass 0.120000
+            centerOfMass [ 0.000000 0.000000 0.000000 ]
+            inertiaMatrix [
+              3.000000e-05 3.000000e-05 3.000000e-05
+              0.000000e+00 0.000000e+00 0.000000e+00
+            ]
+          }
+        }
+      }
+    ]
+    name IS name
+    boundingObject Box {
+       size 0.136700 0.078000 0.012000
+    }
+    physics Physics {
+      density -1
+      mass 1.200000
+      centerOfMass [ 0.000000 0.000000 0.000000 ]
+      inertiaMatrix [
+        2.000000e-03 4.000000e-03 5.000000e-03
+        0.000000e+00 0.000000e+00 0.000000e+00
+      ]
+    }
+  }
+}
+
