@@ -1,0 +1,615 @@
+#VRML_SIM R2025a utf8
+# license: Apache License 2.0
+
+EXTERNPROTO "TrackLabel.proto"
+
+PROTO HexapodTestTrack [
+]
+{
+  Group {
+    children [
+      # 20 degree ascent, elevated platform, and descent.
+      Solid {
+        translation -1.25 -1.15 0.0985
+        rotation 0 1 0 -0.349066
+        children [
+          Shape {
+            appearance DEF ramp_surface PBRAppearance {
+              baseColor 0.18 0.36 0.58
+              roughness 0.9
+              metalness 0
+            }
+            geometry Box {
+              size 0.50 0.46 0.025
+            }
+          }
+        ]
+        name "20_degree_up_ramp"
+        boundingObject Box {
+          size 0.50 0.46 0.025
+        }
+        locked TRUE
+      }
+      Solid {
+        translation -0.86 -1.15 0.171
+        children [
+          Shape {
+            appearance USE ramp_surface
+            geometry Box {
+              size 0.28 0.46 0.025
+            }
+          }
+        ]
+        name "ramp_platform"
+        boundingObject Box {
+          size 0.28 0.46 0.025
+        }
+        locked TRUE
+      }
+      Solid {
+        translation -0.47 -1.15 0.0985
+        rotation 0 1 0 0.349066
+        children [
+          Shape {
+            appearance USE ramp_surface
+            geometry Box {
+              size 0.50 0.46 0.025
+            }
+          }
+        ]
+        name "20_degree_down_ramp"
+        boundingObject Box {
+          size 0.50 0.46 0.025
+        }
+        locked TRUE
+      }
+
+      # Three-step staircase: 30, 60 and 90 mm.
+      Solid {
+        translation 0.00 -1.15 0.015
+        children [
+          Shape {
+            appearance DEF step_surface PBRAppearance {
+              baseColor 0.62 0.40 0.18
+              roughness 1
+              metalness 0
+            }
+            geometry Box {
+              size 0.18 0.46 0.03
+            }
+          }
+        ]
+        name "step_30mm"
+        boundingObject Box {
+          size 0.18 0.46 0.03
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 0.18 -1.15 0.03
+        children [
+          Shape {
+            appearance USE step_surface
+            geometry Box {
+              size 0.18 0.46 0.06
+            }
+          }
+        ]
+        name "step_60mm"
+        boundingObject Box {
+          size 0.18 0.46 0.06
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 0.36 -1.15 0.045
+        children [
+          Shape {
+            appearance USE step_surface
+            geometry Box {
+              size 0.18 0.46 0.09
+            }
+          }
+        ]
+        name "step_90mm"
+        boundingObject Box {
+          size 0.18 0.46 0.09
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 0.57 -1.15 0.03
+        children [
+          Shape {
+            appearance USE step_surface
+            geometry Box {
+              size 0.24 0.46 0.06
+            }
+          }
+        ]
+        name "step_down_60mm"
+        boundingObject Box {
+          size 0.24 0.46 0.06
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 0.78 -1.15 0.015
+        children [
+          Shape {
+            appearance USE step_surface
+            geometry Box {
+              size 0.18 0.46 0.03
+            }
+          }
+        ]
+        name "step_down_30mm"
+        boundingObject Box {
+          size 0.18 0.46 0.03
+        }
+        locked TRUE
+      }
+
+      # Uneven stepping plates with alternating roll/pitch.
+      Solid {
+        translation 1.08 -1.26 0.028
+        rotation 1 0 0 0.105
+        children [
+          Shape {
+            appearance DEF rough_surface PBRAppearance {
+              baseColor 0.30 0.48 0.24
+              roughness 1
+              metalness 0
+            }
+            geometry Box {
+              size 0.24 0.20 0.035
+            }
+          }
+        ]
+        name "uneven_plate_1"
+        boundingObject Box {
+          size 0.24 0.20 0.035
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 1.34 -1.05 0.045
+        rotation 0 1 0 -0.14
+        children [
+          Shape {
+            appearance USE rough_surface
+            geometry Box {
+              size 0.24 0.20 0.04
+            }
+          }
+        ]
+        name "uneven_plate_2"
+        boundingObject Box {
+          size 0.24 0.20 0.04
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 1.58 -1.25 0.035
+        rotation 1 1 0 0.11
+        children [
+          Shape {
+            appearance USE rough_surface
+            geometry Box {
+              size 0.22 0.20 0.035
+            }
+          }
+        ]
+        name "uneven_plate_3"
+        boundingObject Box {
+          size 0.22 0.20 0.035
+        }
+        locked TRUE
+      }
+
+      # Speed bumps across the northbound lane.
+      Solid {
+        translation 1.45 -0.62 0.022
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance DEF warning_surface PBRAppearance {
+              baseColor 0.92 0.62 0.06
+              roughness 0.85
+              metalness 0
+            }
+            geometry Cylinder {
+              radius 0.022
+              height 0.48
+            }
+          }
+        ]
+        name "speed_bump_1"
+        boundingObject Cylinder {
+          radius 0.022
+          height 0.48
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 1.45 -0.40 0.032
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance USE warning_surface
+            geometry Cylinder {
+              radius 0.032
+              height 0.48
+            }
+          }
+        ]
+        name "speed_bump_2"
+        boundingObject Cylinder {
+          radius 0.032
+          height 0.48
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 1.45 -0.15 0.025
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance USE warning_surface
+            geometry Cylinder {
+              radius 0.025
+              height 0.48
+            }
+          }
+        ]
+        name "speed_bump_3"
+        boundingObject Cylinder {
+          radius 0.025
+          height 0.48
+        }
+        locked TRUE
+      }
+
+      # Slalom posts.
+      Solid {
+        translation 1.30 0.28 0.13
+        children [
+          Shape {
+            appearance DEF post_surface PBRAppearance {
+              baseColor 0.82 0.14 0.08
+              roughness 0.75
+              metalness 0
+            }
+            geometry Cylinder {
+              radius 0.045
+              height 0.26
+            }
+          }
+        ]
+        name "slalom_post_1"
+        boundingObject Cylinder {
+          radius 0.045
+          height 0.26
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 1.58 0.58 0.13
+        children [
+          Shape {
+            appearance USE post_surface
+            geometry Cylinder {
+              radius 0.045
+              height 0.26
+            }
+          }
+        ]
+        name "slalom_post_2"
+        boundingObject Cylinder {
+          radius 0.045
+          height 0.26
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 1.30 0.88 0.13
+        children [
+          Shape {
+            appearance USE post_surface
+            geometry Cylinder {
+              radius 0.045
+              height 0.26
+            }
+          }
+        ]
+        name "slalom_post_3"
+        boundingObject Cylinder {
+          radius 0.045
+          height 0.26
+        }
+        locked TRUE
+      }
+
+      # Narrow corridor with alternating wall-mounted protrusions.
+      Solid {
+        translation 0.45 1.28 0.16
+        children [
+          Shape {
+            appearance DEF wall_surface PBRAppearance {
+              baseColor 0.34 0.34 0.38
+              roughness 0.9
+              metalness 0
+            }
+            geometry Box {
+              size 1.25 0.05 0.32
+            }
+          }
+        ]
+        name "corridor_left_wall"
+        boundingObject Box {
+          size 1.25 0.05 0.32
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 0.45 0.72 0.16
+        children [
+          Shape {
+            appearance USE wall_surface
+            geometry Box {
+              size 1.25 0.05 0.32
+            }
+          }
+        ]
+        name "corridor_right_wall"
+        boundingObject Box {
+          size 1.25 0.05 0.32
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 0.15 1.20 0.10
+        children [
+          Shape {
+            appearance USE warning_surface
+            geometry Box {
+              size 0.12 0.14 0.10
+            }
+          }
+        ]
+        name "left_wall_protrusion"
+        boundingObject Box {
+          size 0.12 0.14 0.10
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 0.52 0.80 0.12
+        children [
+          Shape {
+            appearance USE warning_surface
+            geometry Box {
+              size 0.12 0.14 0.14
+            }
+          }
+        ]
+        name "right_wall_protrusion"
+        boundingObject Box {
+          size 0.12 0.14 0.14
+        }
+        locked TRUE
+      }
+      Solid {
+        translation 0.88 1.20 0.14
+        children [
+          Shape {
+            appearance USE warning_surface
+            geometry Box {
+              size 0.12 0.14 0.18
+            }
+          }
+        ]
+        name "left_wall_high_protrusion"
+        boundingObject Box {
+          size 0.12 0.14 0.18
+        }
+        locked TRUE
+      }
+
+      # Low overhead beam at the corridor exit.
+      Solid {
+        translation -0.20 1.00 0.22
+        children [
+          Shape {
+            appearance USE wall_surface
+            geometry Box {
+              size 0.06 0.58 0.07
+            }
+          }
+        ]
+        name "low_overhead_beam"
+        boundingObject Box {
+          size 0.06 0.58 0.07
+        }
+        locked TRUE
+      }
+
+      # Rock field: low blocks with varied size, height, and orientation.
+      Solid {
+        translation -0.72 0.95 0.025
+        rotation 0 0 1 0.35
+        children [
+          Shape {
+            appearance USE rough_surface
+            geometry Box {
+              size 0.16 0.12 0.05
+            }
+          }
+        ]
+        name "rock_1"
+        boundingObject Box {
+          size 0.16 0.12 0.05
+        }
+        locked TRUE
+      }
+      Solid {
+        translation -0.96 1.12 0.035
+        rotation 0 0 1 -0.4
+        children [
+          Shape {
+            appearance USE rough_surface
+            geometry Box {
+              size 0.20 0.14 0.07
+            }
+          }
+        ]
+        name "rock_2"
+        boundingObject Box {
+          size 0.20 0.14 0.07
+        }
+        locked TRUE
+      }
+      Solid {
+        translation -1.20 0.90 0.02
+        rotation 0 0 1 0.7
+        children [
+          Shape {
+            appearance USE rough_surface
+            geometry Box {
+              size 0.13 0.18 0.04
+            }
+          }
+        ]
+        name "rock_3"
+        boundingObject Box {
+          size 0.13 0.18 0.04
+        }
+        locked TRUE
+      }
+      Solid {
+        translation -1.42 1.15 0.045
+        rotation 0 0 1 -0.25
+        children [
+          Shape {
+            appearance USE rough_surface
+            geometry Box {
+              size 0.18 0.16 0.09
+            }
+          }
+        ]
+        name "rock_4"
+        boundingObject Box {
+          size 0.18 0.16 0.09
+        }
+        locked TRUE
+      }
+
+      # Narrow balance beam and side ditch markers.
+      Solid {
+        translation -1.35 0.20 0.035
+        children [
+          Shape {
+            appearance DEF balance_surface PBRAppearance {
+              baseColor 0.20 0.52 0.54
+              roughness 0.9
+              metalness 0
+            }
+            geometry Box {
+              size 0.80 0.22 0.07
+            }
+          }
+        ]
+        name "balance_beam"
+        boundingObject Box {
+          size 0.80 0.22 0.07
+        }
+        locked TRUE
+      }
+      Solid {
+        translation -1.35 0.39 0.035
+        children [
+          Shape {
+            appearance USE warning_surface
+            geometry Box {
+              size 0.80 0.04 0.07
+            }
+          }
+        ]
+        name "balance_edge_marker_left"
+        boundingObject Box {
+          size 0.80 0.04 0.07
+        }
+        locked TRUE
+      }
+      Solid {
+        translation -1.35 0.01 0.035
+        children [
+          Shape {
+            appearance USE warning_surface
+            geometry Box {
+              size 0.80 0.04 0.07
+            }
+          }
+        ]
+        name "balance_edge_marker_right"
+        boundingObject Box {
+          size 0.80 0.04 0.07
+        }
+        locked TRUE
+      }
+
+      # Top-facing visual labels. Object names above remain available in the
+      # Scene Tree for programmatic inspection.
+      TrackLabel {
+        translation -1.70 -1.50 0.012
+        size 0.42 0.10
+        textureUrl [ "../textures/labels/start.png" ]
+      }
+      TrackLabel {
+        translation -0.87 -1.48 0.012
+        size 0.60 0.12
+        textureUrl [ "../textures/labels/01_ramp.png" ]
+      }
+      TrackLabel {
+        translation 0.40 -1.48 0.012
+        size 0.70 0.12
+        textureUrl [ "../textures/labels/02_steps.png" ]
+      }
+      TrackLabel {
+        translation 1.34 -1.52 0.012
+        size 0.60 0.12
+        textureUrl [ "../textures/labels/03_uneven.png" ]
+      }
+      TrackLabel {
+        translation 1.70 -0.38 0.012
+        size 0.60 0.12
+        textureUrl [ "../textures/labels/04_bumps.png" ]
+      }
+      TrackLabel {
+        translation 1.68 0.62 0.012
+        size 0.50 0.10
+        textureUrl [ "../textures/labels/05_slalom.png" ]
+      }
+      TrackLabel {
+        translation 0.45 1.55 0.012
+        size 0.76 0.12
+        textureUrl [ "../textures/labels/06_corridor.png" ]
+      }
+      TrackLabel {
+        translation -0.20 0.62 0.012
+        size 0.50 0.10
+        textureUrl [ "../textures/labels/07_beam.png" ]
+      }
+      TrackLabel {
+        translation -1.10 1.48 0.012
+        size 0.55 0.11
+        textureUrl [ "../textures/labels/08_rocks.png" ]
+      }
+      TrackLabel {
+        translation -1.35 -0.18 0.012
+        size 0.60 0.12
+        textureUrl [ "../textures/labels/09_balance.png" ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Webots per-user GUI state.
+worlds/.*.wbproj

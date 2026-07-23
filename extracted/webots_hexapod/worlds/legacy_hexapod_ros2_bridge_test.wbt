@@ -1,0 +1,39 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "../protos/LegacyHexapod.proto"
+EXTERNPROTO "../protos/HexapodTestTrack.proto"
+
+WorldInfo {
+  title "Legacy Hexapod ROS 2 Bridge Test"
+  basicTimeStep 32
+}
+
+Viewpoint {
+  orientation -0.476 0.420 0.773 1.18
+  position 3.45 -3.65 3.15
+}
+
+TexturedBackground {
+}
+
+TexturedBackgroundLight {
+}
+
+RectangleArena {
+  floorSize 4 4
+  wallHeight 0.18
+}
+
+HexapodTestTrack {
+}
+
+LegacyHexapod {
+  translation -1.72 -1.15 0.16
+  rotation 0 0 1 0
+  controller "<extern>"
+  name "legacy_hexapod_ros2"
+  selfCollision FALSE
+}
