@@ -86,6 +86,29 @@ source /opt/ros/humble/setup.bash
 ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 0.4}}" -r 10
 ```
 
+## Closed-loop path demos
+
+`hexapod_path_demo.py` follows paths using live `/odom` feedback and publishes
+combined linear/angular commands. Generated paths are rejected if their centre
+line leaves the default safe arena region (`|x|` or `|y|` above 0.75 m).
+
+```bash
+source /opt/ros/humble/setup.bash
+cd extracted/webots_hexapod
+
+# Return to the arena centre.
+./hexapod_path_demo.py goto --target-x 0 --target-y 0 --tolerance 0.04
+
+# Relative paths starting from the robot's current pose.
+./hexapod_path_demo.py circle --radius 0.20
+./hexapod_path_demo.py figure8 --radius 0.12
+./hexapod_path_demo.py square --radius 0.15
+./hexapod_path_demo.py s_curve --radius 0.12
+```
+
+Only one `/cmd_vel` publisher should run at a time. Stop any manual
+`ros2 topic pub` command before starting a path demo.
+
 ## Notes
 
 - This is a first-pass bridge intended to get Webots sensors and gait control into ROS 2 quickly.
